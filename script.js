@@ -6,8 +6,6 @@ player = document.getElementById("player");
 body = document.getElementById("body");
 title = document.getElementById("title");
 
-// document.body.appendChild(player);
-
 player.addEventListener("mousedown", function(e) {
     isDown = true;
     offset = [
@@ -28,6 +26,7 @@ document.addEventListener("mousemove", function(event) {
         };
         player.style.left = (mousePosition.x + offset[0]) + "px";
         player.style.top = (mousePosition.y + offset[1]) + "px";
+        is_colliding();
     }
 }, true);
 
@@ -60,15 +59,34 @@ function moveBlock(){
     block.style.left = Math.floor(Math.random() * 90 + 5) + '%';
 }
 
-moveBlock();
-
-block.addEventListener("mouseenter", function () {
-    moveBlock();
-    score++;
-    highScore();
-});
-
 function gameLost() {
     alert("Game Over" + "      Score: " + score + "     Highscore: " + highscore);
     location.reload();
 }
+
+var is_colliding = function() {
+    var d1_height = player.offsetHeight;
+    var d1_width = player.offsetWidth;
+    var d1_distance_from_top = player.offsetTop + d1_height;
+    var d1_distance_from_left = player.offsetLeft + d1_width;
+  
+    var d2_height = block.offsetHeight;
+    var d2_width = block.offsetWidth;
+    var d2_distance_from_top = block.offsetTop + d2_height;
+    var d2_distance_from_left = block.offsetLeft + d2_width;
+  
+    var not_colliding =
+      d1_distance_from_top < block.offsetTop ||
+      player.offsetTop > d2_distance_from_top ||
+      d1_distance_from_left < block.offsetTop ||
+      player.offsetLeft > d2_distance_from_left;
+
+    if (!not_colliding) {
+        console.log("collide");
+        moveBlock();
+        highScore();
+        score++;
+    }
+
+    return !not_colliding;
+};
