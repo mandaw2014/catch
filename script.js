@@ -6,14 +6,16 @@ player = document.getElementById("player");
 body = document.getElementById("body");
 title = document.getElementById("title");
 
-player.addEventListener("mousedown", function(e) {
-   isDown = true;
+var mouseDown = function(e) {
+    isDown = true;
     offset = [
         player.offsetLeft - e.clientY,
         player.offsetTop - e.clientX
     ];
-}, true); 
+    window.removeEventListener("mousedown", mouseDown, false);
+};
 
+window.addEventListener("mousedown", mouseDown, false);
 
 document.addEventListener("mousemove", function(event) {
     event.preventDefault();
@@ -27,6 +29,7 @@ document.addEventListener("mousemove", function(event) {
         player.style.left = (mousePosition.x + offset[0]) + "px";
         player.style.top = (mousePosition.y + offset[1]) + "px";
         is_colliding();
+        highScore();
     }
 }, true);
 
@@ -36,12 +39,26 @@ if (isDown === false) {
         block.style.display = "block";
         document.getElementById("h3").style.display = "none";
         setTimeout(gameLost, 30000);
+        scoreText.style.top = "-58px";
+        scoreText.style.display = "block";
+
+        window.setInterval(function () {
+            block.style.display = "none";
+        }, 30000);
     });
 }
 
 var block = document.getElementById("block");
 var score = 0;
 var highscore = localStorage.getItem("highscore/catch", 0);
+var scoreText = document.getElementById("score");
+var highScoreText = document.getElementById("highscoreText");
+var highScoreNum = document.getElementById("highscore");
+
+function updateScore () {
+    score++;
+    scoreText.innerText = score;  
+}
 
 function highScore () {
     if (highscore != null) {
@@ -51,6 +68,8 @@ function highScore () {
     } else {
         localStorage.setItem("highscore/catch", score);
     }
+
+    highScoreNum.innerText = highscore;
 }
 
 function moveBlock(){
@@ -60,7 +79,13 @@ function moveBlock(){
 }
 
 function gameLost() {
-    alert("Game Over" + "      Score: " + score + "     Highscore: " + highscore);
+    highScoreText.style.display = "block";
+    highScoreNum.style.display = "block";
+    setTimeout(Alert, 4000);
+}
+
+function Alert() {
+    alert("Game Over " + "    Click OK to play again");
     location.reload();
 }
 
@@ -84,8 +109,7 @@ var is_colliding = function() {
     if (!not_colliding) {
         console.log("collide");
         moveBlock();
-        highScore();
-        score++;
+        updateScore();
     }
 
     return !not_colliding;
