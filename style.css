@@ -32,3 +32,30 @@
     background: red;
     color: blue;
 }
+
+#score {
+    text-align: center;
+    font-family: 'Coda Caption', sans-serif;
+    font-size: 40px;
+    display: none;
+}
+
+#highscoreText {
+    font-family: 'Coda Caption', sans-serif;
+    font-size: 30px;
+    text-align: right;
+    position: relative;
+    top: -100px;
+    left: -100px;
+    display: none;
+}
+
+#highscore {
+    font-family: 'Coda Caption', sans-serif;
+    font-size: 30px;
+    text-align: right;
+    position: relative;
+    top: -146px;
+    left: -40px;
+    display: none;
+}
