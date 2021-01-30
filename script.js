@@ -34,25 +34,13 @@ document.addEventListener("mousemove", function(event) {
 }, true);
 
 player.addEventListener("touchmove", function(event) {
-    var touchLocation = event.targetTouches[0];
-
-    player.style.left = touchLocation.pageX + 'px';
-    player.style.top = touchLocation.pageY + 'px';
-});
-
-player.addEventListener('touchend', function (ev) {
-    var x = parseInt(player.style.left);
-    var y = parseInt(player.style.top);
+    var touch = event.targetTouches[0];
     
-    if (x < 388 || x > 646) {
-        player.style.left = '450px';
-        player.style.top = '175px';
-    }
-    if (y < 100 || y > 356) {
-        player.style.left = '450px';
-        player.style.top = '175px';
-    }
-})
+    // Place element where the finger is
+    player.style.left = touch.pageX - 25 + 'px';
+    player.style.top = touch.pageY - 25 + 'px';
+    event.preventDefault();
+}, false);
 
 if (isDown === false) {
     player.addEventListener("click", function() {
