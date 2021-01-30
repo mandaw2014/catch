@@ -6,6 +6,8 @@
 body {
     background-color:#202830;
     color:#ffffff;
+    overflow-y: hidden; /* Hide vertical scrollbar */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
 }
 
 #title {
