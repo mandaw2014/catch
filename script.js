@@ -33,6 +33,27 @@ document.addEventListener("mousemove", function(event) {
     }
 }, true);
 
+player.addEventListener("touchmove", function(event) {
+    var touchLocation = event.targetTouches[0];
+
+    player.style.left = touchLocation.pageX + 'px';
+    player.style.top = touchLocation.pageY + 'px';
+});
+
+player.addEventListener('touchend', function (ev) {
+    var x = parseInt(player.style.left);
+    var y = parseInt(player.style.top);
+    
+    if (x < 388 || x > 646) {
+        player.style.left = '450px';
+        player.style.top = '175px';
+    }
+    if (y < 100 || y > 356) {
+        player.style.left = '450px';
+        player.style.top = '175px';
+    }
+})
+
 if (isDown === false) {
     player.addEventListener("click", function() {
         body.style.cursor = "none";
